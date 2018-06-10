@@ -189,27 +189,21 @@
 
 </section>
 
-<!-- script src="/js/localforage.js"></script -->
+<script src="/js/localforage.js"></script>
 
 <script>
 
-    var AW3Dstore;
+    var AW3Dstore = localforage.createInstance({
+        driver: localforage.INDEXEDDB,
+        name: "anywhere3d",
+        storeName: "AW3Dstore",
+        version: 1.0
+    });
 
-    $.getScript("/js/localforage.js", function(script, status, xhr){
-
-        AW3Dstore = localforage.createInstance({
-            driver: localforage.INDEXEDDB,
-            name: "anywhere3d",
-            storeName: "AW3Dstore",
-            version: 1.0
-        });
-
-        AW3Dstore.ready().then(function() {
-            console.log("[AW3Dstore]", AW3Dstore.driver()); // asyncStorage
-        }).catch(function (err) {
-            console.error("[AW3Dstore Error:]", err); 
-        });
-
+    AW3Dstore.ready().then(function() {
+        console.log("[AW3Dstore Ready:]", AW3Dstore.driver()); // asyncStorage
+    }).catch(function (err) {
+        console.error("[AW3Dstore Error:]", err); 
     });
 
 </script>
