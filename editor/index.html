@@ -336,6 +336,10 @@
 
 //  editor-runtime.js
 
+    localPlayer.holder.visible = false;
+    localPlayer.controller.center.set(0,1,0);
+    localPlayer.controller.direction = Math.PI;
+
     animate();
 
     function animate(){
