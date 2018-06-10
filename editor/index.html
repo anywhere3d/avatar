@@ -353,7 +353,8 @@
         var time = clock.getElapsedTime();
         
         cameraControls.update();
-        THREE.AnimationHandler.update( delta );
+        localPlayer.outfit.update();
+        AnimationManager.update( delta );
     }
 
 //  Event Listeners.
