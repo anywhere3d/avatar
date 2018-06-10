@@ -1,1 +1,1 @@
-# avatar
+# Avatar Editor
