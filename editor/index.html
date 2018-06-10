@@ -351,7 +351,8 @@
     function update() {
         var delta = clock.getDelta();
         var time = clock.getElapsedTime();
-        
+
+        world.step( delta );
         cameraControls.update();
         localPlayer.outfit.update();
         AnimationManager.update( delta );
