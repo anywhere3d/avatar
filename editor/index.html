@@ -376,13 +376,25 @@
     }
 
     function update() {
+
         var delta = clock.getDelta();
         var time = clock.getElapsedTime();
 
+        localPlayer.outfit.update();
         world.step( delta );
         cameraControls.update();
-        localPlayer.outfit.update();
+        keyInputControls.update();
+        joystick1.update();
+        joystick2.update();
         AnimationManager.update( delta );
+
+        var $update = $(".update");
+        if ( $update.length > 0 ) {
+            for ( var i = 0; i < $update.length; i++ ){
+                if ( !!$update[i].update ) $update[i].update(delta);
+            }
+        }
+
     }
 
 //  Event Listeners.
