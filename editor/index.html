@@ -210,7 +210,6 @@
 <script>
 
 //  editor-scene.js
-    var debugMode;
 
     var fontFolder = "/three/fonts/";
     var fontPath = fontFolder + "helvetiker_regular.typeface.json";
@@ -237,7 +236,9 @@
 
     camera = new FpsCamera(50, 1, 10000);
     camera.position.set(0, 20, 100);
+
     controls = new THREE.EditorControls(camera);
+    camera.lookAt(controls.center);
 
     scene.add(directionalLight(0xffffff,  1000, 1000,  1000, 0.5));
     scene.add(directionalLight(0xffffff,  1000, 1000, -1000, 0.5)); 
@@ -250,7 +251,6 @@
     axisOriginHelper = new OriginAxisHelper(500);
 
     projector = new THREE.Projector();
-//  keyboard = new KeyboardState();
     clock = new THREE.Clock();
 
     renderer = new THREE.WebGLRenderer({
@@ -260,11 +260,10 @@
 
     renderer.shadowMap.enabled = true;
     renderer.setPixelRatio( window.devicePixelRatio );
-//  renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setSize( container.clientWidth, container.clientHeight );
     container.appendChild( renderer.domElement );
 
-    sceneBackground( "/skyboxes/space4/" );
+    sceneBackground( "https://i.imgur.com/" );
 
     function sceneBackground( path ){
         if (!!scene && Number(THREE.REVISION) >= 78) {
@@ -272,22 +271,58 @@
             skyboxfolder = path;
             var loader = new THREE.CubeTextureLoader();
             var urls = [
-                "https://i.imgur.com/v6bjQLb.jpg", // "posx.jpg",
-                "https://i.imgur.com/lwrlr6P.jpg", // "negx.jpg", 
-                "https://i.imgur.com/kKUKBJg.jpg", // "posy.jpg", 
-                "https://i.imgur.com/N0oZlJR.jpg", // "negy.jpg", 
-                "https://i.imgur.com/x9q8z0K.jpg", // "posz.jpg", 
-                "https://i.imgur.com/HYcK7Ii.jpg", // "negz.jpg"
+                "v6bjQLb.jpg", // "posx.jpg",
+                "lwrlr6P.jpg", // "negx.jpg", 
+                "kKUKBJg.jpg", // "posy.jpg", 
+                "N0oZlJR.jpg", // "negy.jpg", 
+                "x9q8z0K.jpg", // "posz.jpg", 
+                "HYcK7Ii.jpg", // "negz.jpg"
             ];
             loader.load( urls, function(texture){
-            //  debugMode && console.log("cube texture loaded:", url);
                 scene.background = texture;
                 scene.background.needsUpdate = true;
             });
         }
     }
 
+//  editor-runtime.js
+
+    animate();
+
+    function animate(){
+        AnimationFrameID = requestAnimationFrame( animate );
+        render();
+        update();
+    }
+    
+    function render(){
+        renderer.render( scene, camera );
+    }
+
+    function update() {
+        var delta = clock.getDelta();
+        var	time = clock.getElapsedTime();
+    }
+
+//  Event Listeners.
+
+    $(window).on( "resize", onWindowResize );
+
+    function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( container.clientWidth, container.clientHeight );
+    }
+
 </script>
+
+
+
+
+
+
+
+
 
 </body>
 </html>
