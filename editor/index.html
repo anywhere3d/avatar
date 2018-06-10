@@ -286,11 +286,9 @@
 
 //  MW world.js
 
-    var world, groundBody;
-
 //  MESHWALK WORLD.
 
-    world = new MW.World();
+    var world = new MW.World();
 
 //  OCTREE.
 
@@ -302,7 +300,7 @@
     octree = new MW.Octree( min, max, partition );
     world.add( octree );
 
-//  Ground. (its going after cameraControls created)
+//  Ground.
     var ground = new THREE.Mesh(
         new THREE.PlaneGeometry( 6000, 6000, 1, 1 ),
         new THREE.MeshBasicMaterial({ 
@@ -313,14 +311,10 @@
         })
     );
 
-    ground.rotation.x = THREE.Math.degToRad( -90 ); // -Math.PI/2
+    ground.rotation.x = THREE.Math.degToRad( -90 ); // -Math.PI * 0.5;
 
-//  We want the ground as collision surface only,
-//  so we do not add the ground in the scene.
-    scene.add( ground );
+//  scene.add( ground );
 
-//  Add the ground to WALKMESH world octree object.
-//  MESHWALK use octree system to detect collision objects.
     octree.importThreeMesh( ground ); // IMPORTANT //
 
 //  We do not want camera to have collision with any objects,
@@ -332,6 +326,7 @@
 <script src="/js/AW3DOutfit.js"></script>
 <script src="/js/AW3DAnimationHandler.js"></script>
 <script src="/js/PlayerController.js"></script>
+
 
 
 
@@ -357,10 +352,9 @@
 
     function update() {
         var delta = clock.getDelta();
-        var	time = clock.getElapsedTime();
-
+        var time = clock.getElapsedTime();
+        
         cameraControls.update();
-
     }
 
 //  Event Listeners.
