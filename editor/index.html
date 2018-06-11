@@ -25,9 +25,13 @@
 
     <script src="/js/w3.js"></script>
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery-ui.js"></script>
     <script src="/js/jquery.lazy.js"></script>
     <script src="/js/jquery.lazy.plugins.js"></script>
+    <script src="/js/localforage.js"></script>
+    <script src="/js/rawinflate.js"></script>
+    <script src="/js/rawdeflate.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
+
     <script>
         debugMode = true;
         $.ajaxSetup({
@@ -192,33 +196,42 @@
 
 </section>
 
-<script src="/js/localforage.js"></script>
-
 <script>
 
-    var AW3Dstore = localforage.createInstance({
+    var AW3D_Cache = localforage.createInstance({
         driver: localforage.INDEXEDDB,
         name: "anywhere3d",
-        storeName: "AW3Dstore",
+        storeName: "AW3D_Cache",
         version: 1.0
     });
 
-    AW3Dstore.ready().then(function() {
-        console.log("[AW3Dstore ready]:", AW3Dstore.driver()); // asyncStorage
+    var AW3D_Data = localforage.createInstance({
+        driver: localforage.INDEXEDDB,
+        name: "anywhere3d",
+        storeName: "AW3D_Data",
+        version: 1.0
+    });
+
+    AW3D_Cache.ready().then(function() {
+        console.log("[AW3D Cache ready]:", AW3D_Cache.driver()); // asyncStorage
     }).catch(function (err) {
-        console.error("[AW3Dstore Error]:", err); 
+        console.error("[AW3D Cache Error]:", err); 
+    });
+
+    AW3D_Data.ready().then(function() {
+        console.log("[AW3D Data ready]:", AW3D_Data.driver()); // asyncStorage
+    }).catch(function (err) {
+        console.error("[AW3D Data Error]:", err); 
     });
 
 </script>
 
-<script async src="/js/alerts.js"></script>
-<script async src="/js/rawinflate.js"></script>
-<script async src="/js/rawdeflate.js"></script>
 <script async src="/js/bootbox.min.js"></script>
 <script async src="/js/bootstrap.min.js"></script>
-<script async src="/js/DeviceDetector.js"></script>
+<script async src="/js/alerts.js"></script>
 <script async src="/js/spectrum.js"></script>
 <script async src="/js/SidePanels.js"></script>
+<script async src="/js/jquery-ui.js"></script>
 
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
