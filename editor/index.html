@@ -420,10 +420,8 @@
     var actionHolderSelector = "#actions-holder";
     var actionControlsSelector = "#action-controls";
     var actionControlsComponent = componentsFolder + "action-controls.html";
-    $(actionControlsSelector).one("click", function(){
-        $(actionHolderSelector).load(actionControlsComponent, function(resoponse, status, xhr){
-            debugMode && console.log("action-controls:", status);
-        });
+    $(actionHolderSelector).load(actionControlsComponent, function(resoponse, status, xhr){
+        debugMode && console.log("action-controls:", status);
     });
 </script>
 
