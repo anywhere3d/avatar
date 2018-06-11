@@ -403,6 +403,26 @@
 
 </script>
 
+<script>
+    var jsFolder = "/js/";
+    var scriptsFolder = "/scripts/";
+    var componentsFolder = "/components/";
+    THREE.Cache.enabled = true;
+    THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
+</script>
+
+<script>
+//  action-controls.html
+    var actionHolderSelector = "#actions-holder";
+    var actionControlsSelector = "#action-controls";
+    var actionControlsComponent = componentsFolder + "action-controls.html";
+    $(actionControlsSelector).one("click", function(){
+        $(actionHolderSelector).load(actionControlsComponent, function(resoponse, status, xhr){
+            debugMode && console.log("action-controls:", status);
+        });
+    });
+</script>
+
 <script src="/js/outfitLoader.js"></script>
 <script src="/js/animationsLoader.js"></script>
 <script src="/js/skeletonLoader.js"></script>
