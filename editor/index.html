@@ -353,6 +353,8 @@
 <script src="/js/animationsLoader.js"></script>
 <script src="/js/skeletonLoader.js"></script>
 
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
 <script>
 
 //  editor-runtime.js
@@ -368,16 +370,15 @@
         render();
         update();
     }
-    
+
+/*
     function render(){
         renderer.render( scene, camera );
     }
-
     function update() {
 
         var delta = clock.getDelta();
         var time = clock.getElapsedTime();
-
         localPlayer.outfit.update();
         world.step( delta );
         cameraControls.update();
@@ -392,8 +393,8 @@
                 if ( !!$update[i].update ) $update[i].update(delta);
             }
         }
-
     }
+*/
 
 //  Event Listeners.
 
