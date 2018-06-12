@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/css/joystick.css">
     <link rel="stylesheet" href="/css/uppy.css">
 
-    <script src="/js/w3.js"></script>
+    <!-- script src="/js/w3.js"></script -->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.lazy.js"></script>
     <script src="/js/jquery.lazy.plugins.js"></script>
@@ -226,12 +226,12 @@
 
 </script>
 
-<script async src="/js/bootbox.min.js"></script>
-<script async src="/js/bootstrap.min.js"></script>
-<script async src="/js/alerts.js"></script>
-<script async src="/js/spectrum.js"></script>
-<script async src="/js/SidePanels.js"></script>
-<script async src="/js/jquery-ui.js"></script>
+<script src="/js/bootbox.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/alerts.js"></script>
+<script src="/js/spectrum.js"></script>
+<script src="/js/sidePanels.js"></script>
+<script src="/js/jquery-ui.js"></script>
 
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
@@ -240,6 +240,14 @@
 <script src="/three/Animation.js"></script>
 <script src="/three/AnimationHandler.js"></script>
 <script src="/three/KeyFrameAnimation.js"></script>
+
+<script>
+    var jsFolder = "/js/";
+    var scriptsFolder = "/scripts/";
+    var componentsFolder = "/components/";
+    THREE.Cache.enabled = true;
+    THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
+</script>
 
 <script src="/js/MW.js"></script>
 <script src="/js/MWtps.js"></script>
@@ -366,27 +374,21 @@
 <script src="/js/animationsLoader.js"></script>
 <script src="/js/skeletonLoader.js"></script>
 
-<script src="/js/fmBodyLoader.js"></script>
-<script src="/js/fmBraLoader.js"></script>
-<script src="/js/fmDressLoader.js"></script>
-<script src="/js/fmHairsLoader.js"></script>
-<script src="/js/fmPantiesLoader.js"></script>
-<script src="/js/fmSandalShoesLoader.js"></script>
-<script src="/js/fmSkirtLoader.js"></script>
-<script src="/js/fmSneakersLoader.js"></script>
-<script src="/js/fmTailDressLoader.js"></script>
-<script src="/js/fmTrousersLoader.js"></script>
-<script src="/js/fmTshirtLoader.js"></script>
+<script async src="/js/fmBodyLoader.js"></script>
+<script async src="/js/fmBraLoader.js"></script>
+<script async src="/js/fmDressLoader.js"></script>
+<script async src="/js/fmHairsLoader.js"></script>
+<script async src="/js/fmPantiesLoader.js"></script>
+<script async src="/js/fmSandalShoesLoader.js"></script>
+<script async src="/js/fmSkirtLoader.js"></script>
+<script async src="/js/fmSneakersLoader.js"></script>
+<script async src="/js/fmTailDressLoader.js"></script>
+<script async src="/js/fmTrousersLoader.js"></script>
+<script async src="/js/fmTshirtLoader.js"></script>
 
-<script src="/js/hmBodyLoader.js"></script>
+<script async src="/js/hmBodyLoader.js"></script>
 
-<script>
-    var jsFolder = "/js/";
-    var scriptsFolder = "/scripts/";
-    var componentsFolder = "/components/";
-    THREE.Cache.enabled = true;
-    THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
-</script>
+
 
 <script>
 //  action-controls.html
