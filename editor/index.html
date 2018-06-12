@@ -380,62 +380,6 @@
 
 <script src="/js/hmBodyLoader.js"></script>
 
-
-<script src="/js/jquery-update-engine.js"></script>
-<script src="/js/jquery-render-engine.js"></script>
-<script>
-
-//  editor-runtime.js
-
-    localPlayer.holder.visible = false;
-    localPlayer.controller.center.set(0,1,0);
-    localPlayer.controller.direction = Math.PI;
-
-    animate();
-
-    function animate(){
-        AnimationFrameID = requestAnimationFrame( animate );
-        render();
-        update();
-    }
-
-/*
-    function render(){
-        renderer.render( scene, camera );
-    }
-    function update() {
-
-        var delta = clock.getDelta();
-        var time = clock.getElapsedTime();
-        localPlayer.outfit.update();
-        world.step( delta );
-        cameraControls.update();
-        keyInputControls.update();
-        joystick1.update();
-        joystick2.update();
-        AnimationManager.update( delta );
-
-        var $update = $(".update");
-        if ( $update.length > 0 ) {
-            for ( var i = 0; i < $update.length; i++ ){
-                if ( !!$update[i].update ) $update[i].update(delta);
-            }
-        }
-    }
-*/
-
-//  Event Listeners.
-
-    $(window).on( "resize", onWindowResize );
-
-    function onWindowResize() {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize( container.clientWidth, container.clientHeight );
-    }
-
-</script>
-
 <script>
     var jsFolder = "/js/";
     var scriptsFolder = "/scripts/";
@@ -454,11 +398,9 @@
     });
 </script>
 
-
-
-
-
-
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="./app.js"></script>
 
 </body>
 </html>
