@@ -400,6 +400,16 @@
     });
 </script>
 
+<script>
+//  tweet-snapshot.html
+    var snapshotHolderSelector = "#snapshot-holder";
+    var tweetSnapshotComponent = componentsFolder + "tweet-snapshot.html";
+    $(snapshotHolderSelector).load(tweetSnapshotComponent, function(resoponse, status, xhr){
+        debugMode && console.log("tweet-snapshot:", status);
+    });
+</script>
+
+
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
 <script src="./app.js"></script>
