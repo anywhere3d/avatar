@@ -23,29 +23,6 @@
     <link rel="stylesheet" href="/css/joystick.css">
     <link rel="stylesheet" href="/css/uppy.css">
 
-    <!-- script src="/js/w3.js"></script -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.lazy.js" defer></script>
-    <script src="/js/jquery.lazy.plugins.js" defer></script>
-    <script src="/js/localforage.js" defer></script>
-    <script src="/js/rawinflate.js" defer></script>
-    <script src="/js/rawdeflate.js" defer></script>
-    <script src="/js/DeviceDetector.js" defer></script>
-    <script src="/js/bootbox.min.js" defer></script>
-    <script src="/js/bootstrap.min.js" defer></script>
-    <script src="/js/alerts.js" defer></script>
-    <script src="/js/spectrum.js" defer></script>
-    <script src="/js/sidePanels.js" defer></script>
-    <script src="/js/jquery-ui.js" defer></script>
-    <script src="//widget.cloudinary.com/global/all.js" defer></script>
-
-    <script>
-        debugMode = true;
-        $.ajaxSetup({
-            cache: true
-        });
-    </script>
-
 </head>
 
 <body>
@@ -203,6 +180,21 @@
 
 </section>
 
+
+<!-- script src="/js/w3.js"></script -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.lazy.js"></script>
+<script src="/js/jquery.lazy.plugins.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/localforage.js"></script>
+
+<script>
+    debugMode = true;
+    $.ajaxSetup({
+        cache: true
+    });
+</script>
+
 <script>
 
     var AW3D_Cache = localforage.createInstance({
@@ -233,6 +225,15 @@
 
 </script>
 
+<script async src="/js/rawinflate.js"></script>
+<script async src="/js/rawdeflate.js"></script>
+<script async src="/js/DeviceDetector.js"></script>
+<script async src="/js/bootbox.min.js"></script>
+<script async src="/js/bootstrap.min.js"></script>
+<script async src="/js/alerts.js"></script>
+<script async src="/js/spectrum.js"></script>
+<script async src="/js/sidePanels.js"></script>
+
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
 <script src="/three/Detector.js"></script>
@@ -252,8 +253,8 @@
 <script src="/js/MW.js"></script>
 <script src="/js/MWtps.js"></script>
 <script src="/js/VirtualInput.js"></script>
-
 <script src="/js/scene-helpers.js"></script>
+
 <script>
 
 //  editor-scene.js
@@ -328,7 +329,6 @@
         });
     }
 
-
 //  MW world.js
 
 //  MESHWALK WORLD.
@@ -385,10 +385,7 @@
 <script async src="/js/fmTailDressLoader.js"></script>
 <script async src="/js/fmTrousersLoader.js"></script>
 <script async src="/js/fmTshirtLoader.js"></script>
-
 <script async src="/js/hmBodyLoader.js"></script>
-
-
 
 <script>
 //  action-controls.html
@@ -409,10 +406,11 @@
     });
 </script>
 
-
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
 <script src="./app.js"></script>
+
+<script src="//widget.cloudinary.com/global/all.js"></script>
 
 </body>
 </html>
