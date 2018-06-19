@@ -152,56 +152,12 @@
             <div id="actions-holder">
                 <li id="action-controls" class="menu-helpers"><a>Action Controls</a></li>
             </div>
-        <!-- 
-            <div id="menu-holder">
-                <h4>Menu:</h4>
-                <li id="avatar-editor" class="editor-helpers"><a>Avatar Editor</a></li>
-                <li id="outfit-editor" class="editor-helpers"><a>Outfit Editor</a></li>
-                <li id="scene-editor" class="editor-helpers"><a>Scene Editor</a></li>
-                <li id="animator-editor" class="editor-helpers"><a>Animator</a></li>
-            </div>
-         -->
+
             <div id="editor-holder">
 
-                <div id="gender-buttons" class="side-holder">
-                <!-- 
-                    <h4>Gender:</h4>
-                    <a id="gender-male" name="male" class="nav-link btn btn-default btn-white-outline avatar-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/hmHead.png'); background-size: 
-                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Male"></a>
-                
-                    <a id="gender-female" name="female" class="nav-link btn btn-default btn-white-outline avatar-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/fmHead.png'); background-size: 
-                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Female"></a>
-                
-                    <a id="gender-reset" class="nav-link btn btn-default btn-white-outline avatar-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/skull-head.png'); background-size: 
-                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Reset"></a>
-                 -->
-                </div>
+                <div id="gender-buttons" class="side-holder"></div>
 
-            <!-- 
-                <div class="btn btn-info btn-white-outline">Male</div>
-                <div class="btn btn-success btn-white-outline">Female</div>
-                <div class="btn btn-danger btn-white-outline">Reset</div>
-             -->
-
-                <div id="skintone-buttons" class="side-holder">
-                <!-- 
-                    <h4>Skintone:</h4>
-                    <a id="skin-map-fmSkinLight" name="fmSkinLight" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/fmSkinLight.png'); background-size: contain; 
-                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Light"></a>
-                    
-                    <a id="skin-map-fmSkinMedium" name="fmSkinMedium" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/fmSkinMedium.png'); background-size: contain; 
-                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Medium"></a>
-                    
-                    <a id="skin-map-fmSkinDark" name="fmSkinDark" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
-                    style="width:79px; height:79px; background-image: url('/img/fmSkinDark.png'); background-size: contain; 
-                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Dark"></a>
-                 -->
-                </div>
+                <div id="skintone-buttons" class="side-holder"></div>
 
                 <div id="editor-panel" class="side-holder">
                     <li id="open-skin-editor" class="menu-helpers"><a>Skin Editor Open</a></li>
@@ -232,17 +188,10 @@
 
 </section>
 
-
-<!-- script src="/js/w3.js"></script -->
-
-            <!-- JQUERY -->
-
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.lazy.js"></script>
 <script src="/js/jquery.lazy.plugins.js"></script>
 <script src="/js/jquery-ui.js"></script>
-
-         <!-- LOCAL FORAGE -->
 
 <script src="/js/localforage.js"></script>
 
@@ -296,14 +245,9 @@
 
 </script>
 
-
-      <!-- LOCAL STORAGE -->
-
 <script src="/js/store2.js"></script>
 <script src="/js/store.on.js"></script>
 <script src="/js/store.array.js"></script>
-
-    <!-- INFLATE - DEFLATE -->
 
 <script async src="/js/rawinflate.js"></script>
 <script async src="/js/rawdeflate.js"></script>
@@ -342,8 +286,6 @@
 <script async src="/js/sharer.js"></script>
 <script async src="/js/side-panels.js"></script>
 
-        <!-- THREEJS -->
-
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
 <script src="/three/Detector.js"></script>
@@ -359,8 +301,6 @@
     THREE.Cache.enabled = true;
     THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
 </script>
-
-       <!-- SCENE -->
 
 <script src="/js/scene-helpers.js"></script>
 
@@ -393,9 +333,6 @@
 
     camera = new FpsCamera(50, 1, 10000);
     camera.position.set(0, 20, 100);
-
-//  controls = new THREE.EditorControls(camera);
-//  camera.lookAt(controls.center);
 
     scene.add(directionalLight(0xffffff,  1000, 1000,  1000, 0.5));
     scene.add(directionalLight(0xffffff,  1000, 1000, -1000, 0.5)); 
@@ -440,22 +377,14 @@
 
 </script>
 
-              <!-- MESHWALK -->
-
 <script src="/js/MW.js"></script>
 <script src="/js/MWtps.js"></script>
 <script src="/js/VirtualInput.js"></script>
 
 <script>
 
-//  MW world.js
-
     var world = new MW.World();
 
-                //  OCTREE  //
-
-//  Make a octree object, which will be the 
-//  container of rigid objects such as terrain ect.
     partition = 5;
     min = new THREE.Vector3( -5000, -1000, -5000 );
     max = new THREE.Vector3(  5000,  1000,  5000 );
@@ -484,13 +413,9 @@
                 <!-- AW3D -->
 
 <script src="/js/AW3D.js"></script>
-<!-- script src="/js/AW3DOutfit.js"></script -->
-<!-- script src="/js/AW3DAnimationHandler.js"></script -->
 <script src="/js/PlayerController.js"></script>
 <script src="/js/KeyInputControls.js"></script>
 <script src="/js/JoystickControls.js"></script>
-
-            <!-- AW3D LOADERS -->
 
 <script src="/js/outfitLoader.js"></script>
 <script src="/js/loaders/bonesLoader.js"></script>
@@ -516,16 +441,9 @@
 <script async src="/js/loaders/fmTrousersLoader.js"></script>
 <script async src="/js/loaders/fmTshirtLoader.js"></script>
 
-
-
-
-          <!-- RUNTIME ENGINES -->
-
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
 <script src="./app.js"></script>
-
-             <!-- COMPONENTS -->
 
 <script src="/js/avatar-editor-panel.js"></script>
 
@@ -584,15 +502,6 @@
         debugMode && console.log("avatar-save-button:", status);
     });
 </script>
-
-
-
-
-
-
-            <!-- CLOUDINARY -->
-
-<script src="//widget.cloudinary.com/global/all.js"></script>
 
 </body>
 </html>
