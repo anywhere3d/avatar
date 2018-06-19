@@ -102,6 +102,9 @@
     .ui-dialog { opacity:1 !important; }
     .non-ready { display:none; }
     .updater   { cursor:pointer; }
+    
+    .side-holder { width:84%; margin-bottom:10px; }
+
 </style>
 
 
@@ -149,7 +152,7 @@
             <div id="actions-holder">
                 <li id="action-controls" class="menu-helpers"><a>Action Controls</a></li>
             </div>
-
+        <!-- 
             <div id="menu-holder">
                 <h4>Menu:</h4>
                 <li id="avatar-editor" class="editor-helpers"><a>Avatar Editor</a></li>
@@ -157,16 +160,65 @@
                 <li id="scene-editor" class="editor-helpers"><a>Scene Editor</a></li>
                 <li id="animator-editor" class="editor-helpers"><a>Animator</a></li>
             </div>
+         -->
+            <div id="editor-holder">
 
-            <div id="editor-holder"></div>
+                <div id="gender-buttons" class="side-holder">
+                <!-- 
+                    <h4>Gender:</h4>
+                    <a id="gender-male" name="male" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/hmHead.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Male"></a>
+                
+                    <a id="gender-female" name="female" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmHead.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Female"></a>
+                
+                    <a id="gender-reset" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/skull-head.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Reset"></a>
+                 -->
+                </div>
+
+            <!-- 
+                <div class="btn btn-info btn-white-outline">Male</div>
+                <div class="btn btn-success btn-white-outline">Female</div>
+                <div class="btn btn-danger btn-white-outline">Reset</div>
+             -->
+
+                <div id="skintone-buttons" class="side-holder">
+                <!-- 
+                    <h4>Skintone:</h4>
+                    <a id="skin-map-fmSkinLight" name="fmSkinLight" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinLight.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Light"></a>
+                    
+                    <a id="skin-map-fmSkinMedium" name="fmSkinMedium" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinMedium.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Medium"></a>
+                    
+                    <a id="skin-map-fmSkinDark" name="fmSkinDark" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinDark.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Dark"></a>
+                 -->
+                </div>
+
+                <div id="editor-panel" class="side-holder">
+                    <li id="open-skin-editor" class="menu-helpers"><a>Skin Editor Open</a></li>
+                </div>
+
+            </div>
 
             <div id="avatar-editor-holder"></div>
             <div id="outfit-editor-holder"></div>
             <div id="scene-editor-holder"></div>
             <div id="animator-editor-holder"></div>
 
-            <div id="snapshot-holder">
-                <li id="take-snapshot" class="menu-helpers"><a>Snapshots</a></li>
+            <div id="snapshot-holder" class="side-holder">
+                <li id="take-snapshot" class="menu-helpers"><a>Snapshot Open</a></li>
+            </div>
+            <div id="avatar-save-holder" class="side-holder">
+                <li id="save-avatar" class="menu-helpers"><a>Avatar Save</a></li>
             </div>
 
             <div id="scene-window-holder"></div>
@@ -182,10 +234,16 @@
 
 
 <!-- script src="/js/w3.js"></script -->
+
+            <!-- JQUERY -->
+
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.lazy.js"></script>
 <script src="/js/jquery.lazy.plugins.js"></script>
 <script src="/js/jquery-ui.js"></script>
+
+         <!-- LOCAL FORAGE -->
+
 <script src="/js/localforage.js"></script>
 
 <script>
@@ -211,28 +269,80 @@
         version: 1.0
     });
 
+    var AW3D_db = localforage.createInstance({
+        driver: localforage.INDEXEDDB,
+        name: "anywhere3d",
+        storeName: "AW3D_db",
+        version: 1.0
+    });
+
     AW3D_Cache.ready().then(function() {
-        console.log("[AW3D Cache ready]:", AW3D_Cache.driver()); // asyncStorage
+        console.log("[AW3D Cache ready]:", AW3D_Cache.driver()); // <-- asyncStorage
     }).catch(function (err) {
         console.error("[AW3D Cache Error]:", err); 
     });
 
     AW3D_Data.ready().then(function() {
-        console.log("[AW3D Data ready]:", AW3D_Data.driver()); // asyncStorage
+        console.log("[AW3D Data ready]:", AW3D_Data.driver());   // <-- asyncStorage
     }).catch(function (err) {
         console.error("[AW3D Data Error]:", err); 
     });
 
+    AW3D_db.ready().then(function() {
+        console.log("[AW3D datebase ready]:", AW3D_db.driver()); // <-- asyncStorage
+    }).catch(function (err) {
+        console.error("[AW3D datebase Error]:", err); 
+    });
+
 </script>
+
+
+      <!-- LOCAL STORAGE -->
+
+<script src="/js/store2.js"></script>
+<script src="/js/store.on.js"></script>
+<script src="/js/store.array.js"></script>
+
+    <!-- INFLATE - DEFLATE -->
 
 <script async src="/js/rawinflate.js"></script>
 <script async src="/js/rawdeflate.js"></script>
-<script async src="/js/DeviceDetector.js"></script>
+
+<script>
+
+    function encode( string ) {
+        return window.btoa( RawDeflate.deflate( string ) );
+    }
+
+    function decode( string ) {
+        return RawDeflate.inflate( window.atob( string ) );
+    }
+
+//  Samples:
+
+    function getDecodedItemFromLocalStorage( key ){
+        return JSON.parse( RawDeflate.inflate( window.atob( localStorage.getItem( key ) ) ) );
+    }
+
+    function setEncodedItemToLocalStorage(key, data){
+        localStorage.setItem(key, window.btoa( RawDeflate.deflate( JSON.stringify( data ) ) ) );
+    }
+
+</script>
+
+<script async src="/js/alerts.js"></script>
 <script async src="/js/bootbox.min.js"></script>
 <script async src="/js/bootstrap.min.js"></script>
-<script async src="/js/alerts.js"></script>
+<script async src="/js/validator.min.js"></script>
+<script async src="/js/DeviceDetector.js"></script>
+<script async src="/js/MathDecimalAdjustment.js"></script>
+<script async src="/js/html2canvas.js"></script>
 <script async src="/js/spectrum.js"></script>
-<script async src="/js/sidePanels.js"></script>
+<script async src="/js/watermark.js"></script>
+<script async src="/js/sharer.js"></script>
+<script async src="/js/side-panels.js"></script>
+
+        <!-- THREEJS -->
 
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
@@ -250,9 +360,8 @@
     THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
 </script>
 
-<script src="/js/MW.js"></script>
-<script src="/js/MWtps.js"></script>
-<script src="/js/VirtualInput.js"></script>
+       <!-- SCENE -->
+
 <script src="/js/scene-helpers.js"></script>
 
 <script>
@@ -296,7 +405,7 @@
 
     groundHelper = new GroundHelper(500, 10);  
     axisCustomHelper = new CustomAxisHelper(500);
-//  axisOriginHelper = new OriginAxisHelper(500);
+    axisOriginHelper = new OriginAxisHelper(500);
 
     projector = new THREE.Projector();
     clock = new THREE.Clock();
@@ -329,13 +438,21 @@
         });
     }
 
-//  MW world.js
+</script>
 
-//  MESHWALK WORLD.
+              <!-- MESHWALK -->
+
+<script src="/js/MW.js"></script>
+<script src="/js/MWtps.js"></script>
+<script src="/js/VirtualInput.js"></script>
+
+<script>
+
+//  MW world.js
 
     var world = new MW.World();
 
-//  OCTREE.
+                //  OCTREE  //
 
 //  Make a octree object, which will be the 
 //  container of rigid objects such as terrain ect.
@@ -364,28 +481,53 @@
 
 </script>
 
+                <!-- AW3D -->
+
 <script src="/js/AW3D.js"></script>
+<!-- script src="/js/AW3DOutfit.js"></script -->
 <!-- script src="/js/AW3DAnimationHandler.js"></script -->
 <script src="/js/PlayerController.js"></script>
 <script src="/js/KeyInputControls.js"></script>
 <script src="/js/JoystickControls.js"></script>
 
-<script src="/js/outfitLoader.js"></script>
-<script src="/js/animationsLoader.js"></script>
-<script src="/js/skeletonLoader.js"></script>
+            <!-- AW3D LOADERS -->
 
-<script async src="/js/fmBodyLoader.js"></script>
-<script async src="/js/fmBraLoader.js"></script>
-<script async src="/js/fmDressLoader.js"></script>
-<script async src="/js/fmHairsLoader.js"></script>
-<script async src="/js/fmPantiesLoader.js"></script>
-<script async src="/js/fmSandalShoesLoader.js"></script>
-<script async src="/js/fmSkirtLoader.js"></script>
-<script async src="/js/fmSneakersLoader.js"></script>
-<script async src="/js/fmTailDressLoader.js"></script>
-<script async src="/js/fmTrousersLoader.js"></script>
-<script async src="/js/fmTshirtLoader.js"></script>
-<script async src="/js/hmBodyLoader.js"></script>
+<script src="/js/outfitLoader.js"></script>
+<script src="/js/loaders/bonesLoader.js"></script>
+<script src="/js/loaders/animationsLoader.js"></script>
+<script src="/js/loaders/skeletonLoader.js"></script>
+
+<script async src="/js/loaders/fmBodyLoader.js"></script>
+<script async src="/js/loaders/hmBodyLoader.js"></script>
+<script async src="/js/loaders/fmHairsLoader.js"></script>
+<script async src="/js/loaders/fmDressLoader.js"></script>
+<script async src="/js/loaders/fmSandalShoesLoader.js"></script>
+<script async src="/js/loaders/hmHairsLoader.js"></script>
+<script async src="/js/loaders/hmTshirtLoader.js"></script>
+<script async src="/js/loaders/hmTrousersLoader.js"></script>
+<script async src="/js/loaders/hmBoxersLoader.js"></script>
+<script async src="/js/loaders/hmSneakersLoader.js"></script>
+
+<script async src="/js/loaders/fmBraLoader.js"></script>
+<script async src="/js/loaders/fmPantiesLoader.js"></script>
+<script async src="/js/loaders/fmSkirtLoader.js"></script>
+<script async src="/js/loaders/fmSneakersLoader.js"></script>
+<script async src="/js/loaders/fmTailDressLoader.js"></script>
+<script async src="/js/loaders/fmTrousersLoader.js"></script>
+<script async src="/js/loaders/fmTshirtLoader.js"></script>
+
+
+
+
+          <!-- RUNTIME ENGINES -->
+
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="./app.js"></script>
+
+             <!-- COMPONENTS -->
+
+<script src="/js/avatar-editor-panel.js"></script>
 
 <script>
 //  action-controls.html
@@ -398,17 +540,57 @@
 </script>
 
 <script>
-//  tweet-snapshot.html
-    var snapshotHolderSelector = "#snapshot-holder";
-    var tweetSnapshotComponent = componentsFolder + "tweet-snapshot.html";
-    $(snapshotHolderSelector).load(tweetSnapshotComponent, function(resoponse, status, xhr){
-        debugMode && console.log("tweet-snapshot:", status);
+//  display-helpers.html
+    var displayHelpersSelector = "#display-helpers";
+    var displayHelpersHolderSelector = "#display-helpers-holder";
+    var displayHelpersComponent = componentsFolder + "display-helpers.html";
+    $(displayHelpersHolderSelector).load(displayHelpersComponent, function(resoponse, status, xhr){
+        debugMode && console.log("display-helpers:", status);
     });
 </script>
 
-<script src="/js/jquery-update-engine.js"></script>
-<script src="/js/jquery-render-engine.js"></script>
-<script src="./app.js"></script>
+<script>
+//  avatar-gender-buttons.html
+    var genderButtonsSelector = "#gender-buttons";
+    var genderButtonsComponent = componentsFolder + "avatar-gender-buttons.html";
+    $(genderButtonsSelector).load(genderButtonsComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-gender-buttons:", status);
+    });
+</script>
+
+<script>
+//  avatar-skin-panel.html
+    var editorPanelSelector = "#editor-panel";
+    var avatarSkinEditorButtonComponent = componentsFolder + "avatar-skin-editor-button.html";
+    $(editorPanelSelector).load(avatarSkinEditorButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-skin-editor-button:", status);
+    });
+</script>
+
+<script>
+//  snapshot-button.html
+    var snapshotHolderSelector = "#snapshot-holder";
+    var snapshotButtonComponent = componentsFolder + "snapshot-button.html";
+    $(snapshotHolderSelector).load(snapshotButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("snapshot-button:", status);
+    });
+</script>
+
+<script>
+//  avatar-save-button.html
+    var avatarSaveHolderSelector = "#avatar-save-holder";
+    var avatarSaveButtonComponent = componentsFolder + "avatar-save-button.html";
+    $(avatarSaveHolderSelector).load(avatarSaveButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-save-button:", status);
+    });
+</script>
+
+
+
+
+
+
+            <!-- CLOUDINARY -->
 
 <script src="//widget.cloudinary.com/global/all.js"></script>
 
