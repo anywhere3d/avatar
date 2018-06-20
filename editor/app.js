@@ -42,3 +42,12 @@
         mouse.y = ( event.clientY - rendererHalfHeight );
     }
 
+//  action-controls.html
+
+    var actionHolderSelector = "#actions-holder";
+    var actionControlsSelector = "#action-controls";
+    var actionControlsComponent = componentsFolder + "action-controls.html";
+    $(actionHolderSelector).load(actionControlsComponent, function(resoponse, status, xhr){
+        debugMode && console.log("action-controls:", status);
+    });
+
