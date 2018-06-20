@@ -126,9 +126,7 @@
 
             </div>
             
-            <div id="display-helpers-holder">
-                <li id="display-helpers" class="menu-helpers"><a>Display Helpers</a></li>
-            </div>
+            <div id="display-helpers-holder"></div>
 
             <div class="twitter-holder">
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="http://anywhere3d.com" data-lang="en" data-show-count="false">Tweet</a>
@@ -147,9 +145,7 @@
 
         <div id="right-side-content">
 
-            <div id="actions-holder">
-                <li id="action-controls" class="menu-helpers"><a>Action Controls</a></li>
-            </div>
+            <div id="actions-holder"></div>
 
             <div id="editor-holder">
 
@@ -157,9 +153,7 @@
 
                 <div id="skintone-buttons" class="side-holder"></div>
 
-                <div id="editor-panel" class="side-holder">
-                    <li id="open-skin-editor" class="menu-helpers"><a>Skin Editor Open</a></li>
-                </div>
+                <div id="editor-panel" class="side-holder"></div>
 
             </div>
 
@@ -168,12 +162,8 @@
             <div id="scene-editor-holder"></div>
             <div id="animator-editor-holder"></div>
 
-            <div id="snapshot-holder" class="side-holder">
-                <li id="take-snapshot" class="menu-helpers"><a>Snapshot Open</a></li>
-            </div>
-            <div id="avatar-save-holder" class="side-holder">
-                <li id="save-avatar" class="menu-helpers"><a>Avatar Save</a></li>
-            </div>
+            <div id="snapshot-holder" class="side-holder"></div>
+            <div id="avatar-save-holder" class="side-holder"></div>
 
             <div id="scene-window-holder"></div>
             <div id="outfit-saver-holder"></div>
@@ -420,6 +410,18 @@
 <script src="/js/loaders/animationsLoader.js"></script>
 <script src="/js/loaders/skeletonLoader.js"></script>
 
+<script>
+//  Add player.
+    localPlayer.controller.direction = Math.PI - cameraControls.getFrontAngle();
+    if ( store.has("/user/outfits/json/current") ){
+        localPlayer.outfit.fromJSON( store.get("/user/outfits/json/current") );
+    } else {
+        localPlayer.outfit.add( {"body": Avatars.skeleton} );
+    }
+    scene.add(localPlayer.outfit.direction);
+    localPlayer.outfit.update();
+</script>
+
 <script async src="/js/loaders/fmBodyLoader.js"></script>
 <script async src="/js/loaders/hmBodyLoader.js"></script>
 <script async src="/js/loaders/fmHairsLoader.js"></script>
@@ -438,10 +440,6 @@
 <script async src="/js/loaders/fmTailDressLoader.js"></script>
 <script async src="/js/loaders/fmTrousersLoader.js"></script>
 <script async src="/js/loaders/fmTshirtLoader.js"></script>
-
-<script src="/js/jquery-update-engine.js"></script>
-<script src="/js/jquery-render-engine.js"></script>
-<script src="./app.js"></script>
 
 <script src="/js/avatar-editor-panel.js"></script>
 
@@ -500,6 +498,10 @@
         debugMode && console.log("avatar-save-button:", status);
     });
 </script>
+
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="./app.js"></script>
 
 </body>
 </html>
