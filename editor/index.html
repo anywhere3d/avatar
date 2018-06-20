@@ -410,18 +410,6 @@
 <script src="/js/loaders/animationsLoader.js"></script>
 <script src="/js/loaders/skeletonLoader.js"></script>
 
-<script>
-//  Add player.
-    localPlayer.controller.direction = Math.PI - cameraControls.getFrontAngle();
-    if ( store.has("/user/outfits/json/current") ){
-        localPlayer.outfit.fromJSON( store.get("/user/outfits/json/current") );
-    } else {
-        localPlayer.outfit.add( {"body": Avatars.skeleton} );
-    }
-    scene.add(localPlayer.outfit.direction);
-    localPlayer.outfit.update();
-</script>
-
 <script async src="/js/loaders/fmBodyLoader.js"></script>
 <script async src="/js/loaders/hmBodyLoader.js"></script>
 <script async src="/js/loaders/fmHairsLoader.js"></script>
