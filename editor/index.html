@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" contents="{{description}}">
+    <link rel="manifest" href="/manifest.json">
+    <title>Avatar Editor</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
+    <link rel="stylesheet" href="/css/side-panels.css">
+    <link rel="stylesheet" href="/css/messg.css" >
+    <link rel="stylesheet" href="/css/spectrum.css">
+    <link rel="stylesheet" href="/css/colorpicker.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/alerts.css">
+    <link rel="stylesheet" href="/css/panel-ui.css">
+    <link rel="stylesheet" href="/css/anywhere3d.css">
+    <link rel="stylesheet" href="/css/joystick.css">
+    <link rel="stylesheet" href="/css/uppy.css">
+
+</head>
+
+<body>
+
+<style>
+    .navbar-nav > li > a.menu-item,
+    .navbar-nav > li > div > a.menu-item {font-weight:normal;}
+    .navbar-nav > li > a.menu-item:hover,
+    .navbar-nav > li > div > a.menu-item:hover {color:aquamarine;}
+    .navbar-nav > li > div > a.menu-item { text-decoration:none }
+    #nav-btn-login { margin-left:10px; }
+    #nav-btn-login > a { color:#fff; font-weight:bold; font-size:14px; text-decoration:none; }
+    #nav-btn-snapshot > a { color:#38c0ee; }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+    <div class="container">
+
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a href="https://anywhere3d.org" class="navbar-caption" title="anywhere3d.org">anywhere3d</a>
+            </div>
+            <a class="navbar-logo pull-left"><img src="https://i.imgur.com/09bC4Q0.png" alt="anywhere3d logo"></a>
+            <ul class="nav navbar-nav navbar-right pull-left">
+                
+                <li class="first menu-item"></li>
+
+                <li id="nav-item-over" style="display:none;"><a class="menu-item">Overview</a></li>
+                <li id="nav-item-home" style="display:none;"><a class="menu-item">Home</a></li>
+                <li id="nav-item-dash" style="display:none;"><a class="menu-item">Dashboard</a></li>
+                <li id="nav-item-exam" style="display:none;"><a class="menu-item">Examples</a></li>
+
+            </ul>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="pull-right">
+                <div class="navbar-btn btn btn-primary btn-white-outline" id="nav-btn-login" style="display:none;">
+                    <a class="menu-item">Login</a>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<style>
+    body { margin:0px; height:100vh; overflow:hidden; font-family: Arial, sans-serif; }
+    canvas { display:block !important; }
+    #body-section { 
+        height:100%; padding-top:0px; padding-bottom:0px; 
+        background-color:rgba(0,0,0,1); overflow:hidden; 
+    }
+    #render-container { 
+        width:100%; height:100%; 
+        opacity:1; background-color:rgb(0,0,0); 
+    }
+    #splash-holder,
+    #auth-holder { 
+        position:absolute; left:0px; top:0px; width:100%; height:100%;
+        text-align:center; background-color:rgba(255,255,255,0); z-index:1; 
+    }
+    .twitter-holder { text-align:center; margin:10px 0px; }    
+    .patreon-holder { display:none; text-align:center; }
+    #joystick1, #joystick2, #jumpButton  { z-index:0 !important; }
+    .menu-helpers a,
+    .editor-helpers a,
+    .mode-helpers a,
+    .updater-helpers a,
+    .helpers a { font:bold 16px Arial; cursor:pointer; text-decoration:none; }
+    .mode-helper a { color:fuchsia; }
+    .ui-dialog { opacity:1 !important; }
+    .non-ready { display:none; }
+    .updater   { cursor:pointer; }
+
+    .left-slot, .right-slot { margin-bottom:10px; }
+    .side-holder { width:84%; margin-bottom:10px; }
+
+</style>
+
+
+<section class="mbr-section mbr-after-navbar" id="body-section">
+
+    <div id="render-container" class="mbr-overlay"></div>
+
+    <div class="joystick-controls" id="joystick-controls-1"></div>
+    <div class="joystick-controls" id="joystick-controls-2"></div>
+
+    <div class="side-panel" id="left-side">
+        <div id="left-side-pinbtn" title="click this to pin/unpin panel"></div>
+
+        <div id="left-side-content">
+
+            <div id="avatar-editor-left-panel">
+
+                <div id="chatboard-holder">
+                    <!-- li id="chatboard" class="menu-helpers"><a>Open Chatboard</a></li -->
+                </div>
+
+            </div>
+            
+            <div id="display-helpers-holder">
+                <li id="display-helpers" class="menu-helpers"><a>Display Helpers</a></li>
+            </div>
+
+            <div class="twitter-holder">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="http://anywhere3d.com" data-lang="en" data-show-count="false">Tweet</a>
+                <a href="https://twitter.com/anywhere3d?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-screen-name="false" data-lang="en" data-show-count="false">Follow</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+            <div class="patreon-holder"></div>
+
+        </div>
+
+    </div>
+
+    <div class="side-panel" id="right-side">
+        <div id="right-side-pinbtn" title="click this to pin/unpin panel"></div>
+
+        <div id="right-side-content">
+
+            <div id="actions-holder">
+                <li id="action-controls" class="menu-helpers"><a>Action Controls</a></li>
+            </div>
+        <!-- 
+            <div id="menu-holder">
+                <h4>Menu:</h4>
+                <li id="avatar-editor" class="editor-helpers"><a>Avatar Editor</a></li>
+                <li id="outfit-editor" class="editor-helpers"><a>Outfit Editor</a></li>
+                <li id="scene-editor" class="editor-helpers"><a>Scene Editor</a></li>
+                <li id="animator-editor" class="editor-helpers"><a>Animator</a></li>
+            </div>
+         -->
+            <div id="editor-holder">
+
+                <div id="avatar-load-holder" class="side-holder"></div>
+
+                <div id="avatar-skin-editor-holder" class="side-holder"></div>
+
+                <div id="gender-buttons" class="side-holder">
+                <!-- 
+                    <h4>Gender:</h4>
+                    <a id="gender-male" name="male" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/hmHead.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Male"></a>
+                
+                    <a id="gender-female" name="female" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmHead.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Female"></a>
+                
+                    <a id="gender-reset" class="nav-link btn btn-default btn-white-outline avatar-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/skull-head.png'); background-size: 
+                    contain; background-position:50% 50%; background-repeat:no-repeat;" title="Reset"></a>
+                 -->
+                </div>
+
+            <!-- 
+                <div id="skintone-buttons" class="side-holder">
+
+                    <h4>Skintone:</h4>
+                    <a id="skin-map-fmSkinLight" name="fmSkinLight" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinLight.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Light"></a>
+                    
+                    <a id="skin-map-fmSkinMedium" name="fmSkinMedium" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinMedium.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Medium"></a>
+                    
+                    <a id="skin-map-fmSkinDark" name="fmSkinDark" class="nav-link btn btn-default btn-white-outline skin-texture-btn" 
+                    style="width:79px; height:79px; background-image: url('/img/fmSkinDark.png'); background-size: contain; 
+                    background-position:50% 50%; background-repeat:no-repeat;" title="Skin: Dark"></a>
+
+                </div>
+             -->
+
+            <!-- 
+                <div class="btn btn-info btn-white-outline">Male</div>
+                <div class="btn btn-success btn-white-outline">Female</div>
+                <div class="btn btn-danger btn-white-outline">Reset</div>
+             -->
+
+
+            </div>
+
+            <div id="avatar-editor-holder"></div>
+            <div id="outfit-editor-holder"></div>
+            <div id="scene-editor-holder"></div>
+            <div id="animator-editor-holder"></div>
+
+            <div id="avatar-save-holder" class="side-holder"></div>
+
+            <div id="snapshot-holder" class="side-holder"></div>
+
+            <div id="scene-window-holder"></div>
+            <div id="outfit-saver-holder"></div>
+            <div id="water-editor-holder"></div>
+
+            <div id="updaters-holder"></div>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- script src="/js/w3.js"></script -->
+
+            <!-- JQUERY -->
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.lazy.js"></script>
+<script src="/js/jquery.lazy.plugins.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/validator.min.js"></script>
+
+<script>
+
+    debugMode = true;
+
+    var jsFolder = "/js/";
+    var scriptsFolder = "/scripts/";
+    var componentsFolder = "/components/";
+
+    $.ajaxSetup({ cache: false });
+
+</script>
+
+         <!-- LOCAL FORAGE -->
+
+<script src="/js/localforage.js"></script>
+
+<script>
+
+    var CacheStorage = localforage.createInstance({
+        driver: localforage.INDEXEDDB,
+        name: "anywhere3d",
+        storeName: "cache",
+        version: 1.0
+    });
+
+    CacheStorage.ready().then(function() {
+        console.log("[CacheStorage ready]:", CacheStorage.driver()); // <-- asyncStorage
+    }).catch(function (err) {
+        console.error("[CacheStorage Error]:", err); 
+    });
+
+</script>
+
+      <!-- LOCAL STORAGE -->
+
+<script src="/js/store2.js"></script>
+<script src="/js/store.on.js"></script>
+<script src="/js/store.array.js"></script>
+
+    <!-- INFLATE - DEFLATE -->
+
+<script async src="/js/rawinflate.js"></script>
+<script async src="/js/rawdeflate.js"></script>
+
+<script>
+
+    function encode( string ) {
+        return window.btoa( RawDeflate.deflate( string ) );
+    }
+
+    function decode( string ) {
+        return RawDeflate.inflate( window.atob( string ) );
+    }
+
+//  Samples:
+
+    function getDecodedItemFromLocalStorage( key ){
+        return JSON.parse( RawDeflate.inflate( window.atob( localStorage.getItem( key ) ) ) );
+    }
+
+    function setEncodedItemToLocalStorage(key, data){
+        localStorage.setItem(key, window.btoa( RawDeflate.deflate( JSON.stringify( data ) ) ) );
+    }
+
+</script>
+
+<script async src="/js/alerts.js"></script>
+<script async src="/js/bootbox.min.js"></script>
+<script async src="/js/bootstrap.min.js"></script>
+<script async src="/js/DeviceDetector.js"></script>
+<script async src="/js/MathDecimalAdjustment.js"></script>
+<script async src="/js/html2canvas.js"></script>
+<script async src="/js/spectrum.js"></script>
+<script async src="/js/watermark.js"></script>
+<script async src="/js/sharer.js"></script>
+<script async src="/js/side-panels.js"></script>
+
+        <!-- THREEJS -->
+
+<script src="/three/three.js"></script>
+<script src="/three/EditorControls.js"></script>
+<script src="/three/Detector.js"></script>
+<script src="/three/Projector.js"></script>
+<script src="/three/Animation.js"></script>
+<script src="/three/AnimationHandler.js"></script>
+<script src="/three/KeyFrameAnimation.js"></script>
+
+<script>
+    THREE.Cache.enabled = true;
+    THREE.Texture.DEFAULT_IMAGE = "https://i.imgur.com/8eycYxu.png";
+</script>
+
+       <!-- SCENE -->
+
+<script src="/js/scene-helpers.js"></script>
+
+<script>
+
+//  editor-scene.js
+
+    var fontFolder = "/three/fonts/";
+    var fontPath = fontFolder + "helvetiker_regular.typeface.json";
+    var sceneContainerSelector = "#render-container";
+    var container = $(sceneContainerSelector)[0];
+
+    var scene, 
+        camera, 
+        renderer, 
+        controls;
+
+    var sceneLights, 
+        axisCustomHelper, 
+        axisOriginHelper;
+
+    var projector, 
+        keyboard, 
+        clock;
+
+    var scenename = "editor";
+
+    scene = new THREE.Scene();
+    scene.name = scenename;
+
+    camera = new FpsCamera(50, 1, 10000);
+    camera.position.set(0, 20, 100);
+
+//  controls = new THREE.EditorControls(camera);
+//  camera.lookAt(controls.center);
+
+    scene.add(directionalLight(0xffffff,  1000, 1000,  1000, 0.5));
+    scene.add(directionalLight(0xffffff,  1000, 1000, -1000, 0.5)); 
+    scene.add(directionalLight(0xffffff, -1000, 1000,  1000, 0.5)); 
+    scene.add(directionalLight(0xffffff, -1000, 1000, -1000, 0.5));
+    scene.add(directionalLight(0xffffff,     0,-5000,     0, 0.3));
+
+    groundHelper = new GroundHelper(500, 10);  
+    axisCustomHelper = new CustomAxisHelper(500);
+    axisOriginHelper = new OriginAxisHelper(500);
+
+    projector = new THREE.Projector();
+    clock = new THREE.Clock();
+
+    renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        preserveDrawingBuffer: true,
+    });
+
+    renderer.shadowMap.enabled = true;
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( container.clientWidth, container.clientHeight );
+    container.appendChild( renderer.domElement );
+
+    sceneBackground([
+        "https://i.imgur.com/v6bjQLb.jpg", // "posx.jpg",
+        "https://i.imgur.com/lwrlr6P.jpg", // "negx.jpg", 
+        "https://i.imgur.com/kKUKBJg.jpg", // "posy.jpg", 
+        "https://i.imgur.com/N0oZlJR.jpg", // "negy.jpg", 
+        "https://i.imgur.com/x9q8z0K.jpg", // "posz.jpg", 
+        "https://i.imgur.com/HYcK7Ii.jpg", // "negz.jpg"
+    ]);
+
+    function sceneBackground( urls ){
+        if (!scene || Number(THREE.REVISION) < 78) return;
+        var loader = new THREE.CubeTextureLoader();
+        loader.load( urls, function(texture){
+            scene.background = texture;
+            scene.background.needsUpdate = true;
+        });
+    }
+
+</script>
+
+              <!-- MESHWALK -->
+
+<script src="/js/MW.js"></script>
+<script src="/js/MWtps.js"></script>
+<script src="/js/VirtualInput.js"></script>
+
+<script>
+
+//  MW world.js
+
+    var world = new MW.World();
+
+                //  OCTREE  //
+
+//  Make a octree object, which will be the 
+//  container of rigid objects such as terrain ect.
+    partition = 5;
+    min = new THREE.Vector3( -5000, -1000, -5000 );
+    max = new THREE.Vector3(  5000,  1000,  5000 );
+    octree = new MW.Octree( min, max, partition );
+    world.add( octree );
+
+//  Ground.
+    var ground = new THREE.Mesh(
+        new THREE.PlaneGeometry( 6000, 6000, 1, 1 ),
+        new THREE.MeshBasicMaterial({ 
+            color:0x888888,
+            transparent:true,
+            opacity:0.5, 
+            wireframe:false 
+        })
+    );
+
+    ground.rotation.x = THREE.Math.degToRad( -90 ); // -Math.PI * 0.5;
+
+//  scene.add( ground );
+
+    octree.importThreeMesh( ground ); // IMPORTANT //
+
+</script>
+
+                <!-- AW3D -->
+
+<script src="/js/AW3D.js"></script>
+<!-- script src="/js/AW3DOutfit.js"></script -->
+<!-- script src="/js/AW3DAnimationHandler.js"></script -->
+<script src="/js/PlayerController.js"></script>
+<script src="/js/KeyInputControls.js"></script>
+<script src="/js/JoystickControls.js"></script>
+
+            <!-- AW3D LOADERS -->
+
+<script src="/js/OutfitLoader.js"></script>
+<script src="/js/loaders/bonesLoader.js"></script>
+<script src="/js/loaders/animationsLoader.js"></script>
+<script src="/js/loaders/skeletonLoader.js"></script>
+
+<script async src="/js/loaders/fmBodyLoader.js"></script>
+<script async src="/js/loaders/hmBodyLoader.js"></script>
+<script async src="/js/loaders/fmHairsLoader.js"></script>
+<script async src="/js/loaders/fmDressLoader.js"></script>
+<script async src="/js/loaders/fmSandalShoesLoader.js"></script>
+<script async src="/js/loaders/hmHairsLoader.js"></script>
+<script async src="/js/loaders/hmTshirtLoader.js"></script>
+<script async src="/js/loaders/hmTrousersLoader.js"></script>
+<script async src="/js/loaders/hmBoxersLoader.js"></script>
+<script async src="/js/loaders/hmSneakersLoader.js"></script>
+
+<script async src="/js/loaders/fmBraLoader.js"></script>
+<script async src="/js/loaders/fmPantiesLoader.js"></script>
+<script async src="/js/loaders/fmSkirtLoader.js"></script>
+<script async src="/js/loaders/fmSneakersLoader.js"></script>
+<script async src="/js/loaders/fmTailDressLoader.js"></script>
+<script async src="/js/loaders/fmTrousersLoader.js"></script>
+<script async src="/js/loaders/fmTshirtLoader.js"></script>
+
+             <!-- COMPONENTS -->
+
+<script src="/js/form-panel.js"></script>
+<script src="/js/editor-panel.js"></script>
+<script src="/js/snapshot-panel.js"></script>
+<script src="/js/dialogTargetEventListeners.js"></script>
+
+<script>
+/*
+//  action-controls.html
+    var actionHolderSelector = "#actions-holder";
+    var actionControlsSelector = "#action-controls";
+    var actionControlsComponent = componentsFolder + "action-controls.html";
+    $(actionHolderSelector).load(actionControlsComponent, function(resoponse, status, xhr){
+        debugMode && console.log("action-controls:", status);
+    });
+*/
+</script>
+
+<script>
+//  display-helpers.html
+    var displayHelpersSelector = "#display-helpers";
+    var displayHelpersHolderSelector = "#display-helpers-holder";
+    var displayHelpersComponent = componentsFolder + "display-helpers.html";
+    $(displayHelpersHolderSelector).load(displayHelpersComponent, function(resoponse, status, xhr){
+        debugMode && console.log("display-helpers:", status);
+    });
+</script>
+
+<script>
+//  avatar-gender-buttons.html
+    var genderButtonsSelector = "#gender-buttons";
+    var genderButtonsComponent = componentsFolder + "avatar-gender-buttons.html";
+    $(genderButtonsSelector).load(genderButtonsComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-gender-buttons:", status);
+    });
+</script>
+
+<script>
+//  avatar-skin-editor-button.html
+    var avatarSkinEditorHolderSelector = "#avatar-skin-editor-holder";
+    var avatarSkinEditorButtonComponent = componentsFolder + "avatar-skin-editor-button.html";
+    $(avatarSkinEditorHolderSelector).load(avatarSkinEditorButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-skin-editor-button:", status);
+    });
+</script>
+
+<script>
+//  snapshot-button.html
+    var snapshotHolderSelector = "#snapshot-holder";
+    var snapshotButtonComponent = componentsFolder + "snapshot-button.html";
+    $(snapshotHolderSelector).load(snapshotButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("snapshot-button:", status);
+    });
+</script>
+
+<script>
+//  skinned-loader-button.html
+    var skinnedLoaderHolderSelector = "#skinned-loader-holder";
+    var skinnedLoaderButtonComponent = componentsFolder + "skinned-loader-button.html";
+    $(skinnedLoaderHolderSelector).load(skinnedLoaderButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("skinned-loader-button:", status);
+    });
+</script>
+
+<script>
+//  avatar-save-button.html
+    var avatarSaveHolderSelector = "#avatar-save-holder";
+    var avatarSaveButtonComponent = componentsFolder + "avatar-save-button.html";
+    $(avatarSaveHolderSelector).load(avatarSaveButtonComponent, function(resoponse, status, xhr){
+        debugMode && console.log("avatar-save-button:", status);
+    });
+</script>
+
+
+
+
+
+
+          <!-- RUNTIME ENGINES -->
+
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="./app.js"></script>
+
+
+            <!-- CLOUDINARY -->
+
+<script src="//widget.cloudinary.com/global/all.js"></script>
+
+</body>
+</html>
